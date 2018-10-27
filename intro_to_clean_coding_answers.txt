@@ -1,0 +1,144 @@
+###Questions
+
+> In your own words, explain what clean code is and why it is important.
+
+It is important not just to be able to go back and understand the code yourself but also allow other people to understand and maintain your code.
+
+> Think about another commonly used object that relies on computers and explain what would happen if the code was not created to an acceptable standard.
+
+Taking a rocket launch as an example, every part of the launch relies on some sort of code and there is no room for error. If the code is not created to an acceptable standard, it would lead to a catastrophic failure. I, myself, always wonder how do they create tests that make their code without bugs?
+
+> Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+
+`
+FUNCTION do(x, y)               // Creating a new function
+ IF y = "F" THEN               // Check if y is equal "F"
+ SET z to (x−32) * (5/9)       // Formula to convert degrees fahrenheit to celsius
+ PRINT z                       // Print result
+ ELSE IF y = "C" THEN          // If y not equal to "F", check if equal to "C"
+ SET z to x * 1.8000 + 32.00   // Formula to convert degrees celsius to fahrenheit
+ PRINT z                       // Print result
+ END IF
+END FUNCTION
+`
+
+No. First, I do not know what x and y is. I also don't understand the IF statements as there is no definition of string "F" and "C". Further, the code is not indented.
+
+Refactoring:
+
+`
+FUNCTION convertTemperature(temperature, metric)               // Creating a new function
+ SET convertedTemperature = "Not a known metric. Could not convert";
+ IF metric = "F" THEN               // Check if metric is fahrenheit
+  SET convertedTemperature to (temperature−32) * (5/9)       // Formula to convert degrees fahrenheit to celsius
+ ELSE IF metric = "C" THEN          //If metric is not fahrenheit, then check if it is celsius
+  SET convertedTemperature to temperature * 1.8000 + 32.00   // Formula to convert degrees celsius to fahrenheit
+ END IF
+ PRINT convertedTemperature
+END FUNCTION
+`
+
+> Would you consider the following to be clean code? Explain why or why not. If not, refactor the code.
+`
+FUNCTION calcPercent(sum, total)
+ IF NOT(total = 0) THEN
+     SET percentage to sum / total * 100
+ ELSE
+   PRINT "Sorry, cannot divide by 0"
+ END IF
+
+ PRINT percentage
+END FUNCTION
+`
+
+This seems fine.
+
+> Refactoring:
+
+`
+FUNCTION checkOutCustomer(subTotal, discountRate, paymentType)
+   PRINT "Your total due is: " + subTotal * discountRate + (subTotal * tax)
+
+   SET discountedAmount to subTotal * discountRate
+   SET taxAmount to subTotal * tax
+   SET totalDue to discountedAmount + taxAmount
+
+   IF paymentType = 'CASH' THEN
+       CALL getPayment RETURNING amount
+       PRINT "Change due: " + amount - totalDue
+   ELSE IF paymentType = 'CREDIT CARD' THEN
+       CALL getPayment RETURNING amount
+       PRINT "Your credit card has been charged: " + totalDue
+   ELSE
+       PRINT "Not a valid method payment"
+   END IF
+END FUNCTION
+`
+
+`
+FUNCTION checkoutBook(book, guest)
+ IF guest.accountActive AND NOT(guest.hasOverdueBooks) AND guest.outstandingFees = 0 THEN
+   APPEND book to guest.books
+   SET book.status to "Checked Out"
+   PRINT "Your books have been issued."
+ ELSE
+     PRINT "Unable to check out book."
+ END IF
+END FUNCTION
+`
+
+`
+CLASS BankAccount
+
+ FUNCTION displayBalance
+    PRINT balance
+ END FUNCTION
+
+ FUNCTION deposit(amount)
+    SET balance to balance + amount
+ END FUNCTION
+
+ FUNCTION withdraw(amount)
+     IF balance > amount THEN
+       SET balance to balance - amount
+     END
+ END FUNCTION
+
+ FUNCTION offerCreditCard
+     IF NOT(customer.hasCreditCard) THEN
+         PRINT creditCardOffer
+     END
+ END FUNCTION
+
+ FUNCTION offerCheckingAccount
+     IF NOT(customer.hasCheckingAccount) THEN
+         PRINT checkingAccountOffer
+     END
+ END FUNCTION
+
+ ....
+ ....
+ ....
+
+END
+`
+
+> **Square** Given an array of integers, find out whether the sum of the integers is a perfect square. If it is a perfect square, return the square root, otherwise return the sum.
+
+const square = (integerArray) => {
+  let sum = integerArray.reduce((a, b) => a + b, 0);
+  let squareRoot = Math.sqrt(sum);
+  if(Number.isInteger(squareRoot)) return squareRoot;
+  else return sum;
+}
+
+> **Duplicate**
+const hasDuplicates = (integerArray) => {
+  for(let i = 0; i < integerArray.length; i++)
+  {
+    let integerValue = integerArray[i];
+    integerArray.splice(i, 1);
+    if(integerArray.indexOf(integerValue) > -1) return true;
+  }
+  return false;
+}
