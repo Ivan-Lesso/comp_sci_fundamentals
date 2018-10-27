@@ -1,1 +1,62 @@
-# comp_sci_fundamentals
+###Questions
+
+> Why do programmers use pseudocode?
+
+To develop algorithms without writing code in any particular language.
+
+>If you run pseudocode on your computer what would happen?
+
+Pseudocode is meant for humans to read rather than machines, so it will not run on a computer.
+
+#FUNCTION 1
+
+INPUT a number1
+INPUT a number2
+FUNCTION maxNumber WITH number1 and number2 RETURNING answer
+  IF number1 > number1 THEN
+    RETURN number1
+  ELSE
+    RETURN number2
+  END IF
+  RETURN answer
+END FUNCTION
+
+#FUNCTION 2
+
+FUNCTION PRINT_NUMBERS
+  FOR number = 1 to 100
+    PRINT number
+  END FOR
+END FUNCTION
+
+#FUNCTION 3
+
+FUNCTION SEARCH_ENTRY WITH entryString and phoneBookArray RETURNING hasFound
+  SET hasFound to FALSE
+  FOR number = 0 to LENGTH OF phoneBookArray
+
+    IF phoneBookArray[number] EQUALS entryString THEN
+      SET hasFound to TRUE
+      RETURN hasFound
+    END IF
+
+  END FOR
+
+  RETURN hasFound
+
+END FUNCTION
+
+#FUNCTION 4
+
+const search_entry = (entryString, phoneBookArray) => {
+  let hasFound = false;
+
+  for(let number = 0; number < phoneBookArray.length; number++)
+  {
+    if(phoneBookArray[number]===entryString) {
+      hasFound = true;
+      return hasFound;
+    }
+  }
+  return hasFound;
+}
