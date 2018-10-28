@@ -1,0 +1,44 @@
+let amusementParkQueue = {
+  queue: [],
+  showQueue: function() {
+    return this.queue;
+  },
+  setQueue: function(queueInput) {
+    this.queue = queueInput;
+  },
+  insertPerson: function(newPerson) {
+    this.queue.push(newPerson);
+  },
+  insertBefore: function(newPerson, currentPerson) {
+    this.queue.splice( this.queue.indexOf(currentPerson), 0, newPerson);
+  },
+  deletePerson: function(currentPerson) {
+    this.queue.splice(this.queue.indexOf(currentPerson), 1);
+  },
+  findPerson: function(person) {
+    let position = this.queue.indexOf(person);
+    if(position !== -1) return position;
+    else return person+ ' not found';
+  }
+};
+
+amusementParkQueue.setQueue(["Vivian", "Ava", "Josh", "Patrick", "Mike"]);
+amusementParkQueue.insertPerson("Mary");
+console.log(amusementParkQueue.showQueue());
+console.log(amusementParkQueue.findPerson("Josh"));
+console.log(amusementParkQueue.findPerson("Emily"));
+amusementParkQueue.insertBefore("Melissa", "Ava");
+console.log(amusementParkQueue.showQueue());
+amusementParkQueue.deletePerson("Patrick");
+console.log(amusementParkQueue.showQueue());
+
+> Question 2: Provide another real-world example that you can model using a data structure.
+
+Any application with CRUD objects would involve a JS data structure to manipulate the object.
+An example would be the same to-do list we created. A list of to-do would be maintained in a data structure.
+
+> Question 3: How would your data structure allow developers to access and manipulate the data?
+
+A data structure could have predefined methods such as the ones I created in the first questions.
+This allows the developers to quickly call those methods to manipulate the data structure without
+rewriting the code. 
