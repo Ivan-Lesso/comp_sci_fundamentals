@@ -1,0 +1,62 @@
+> What is the main difference between a stack and a queue?
+
+Stack - things are added last and taken out first (LIFO).
+
+Queue - things are added first and taken out first as well (FIFO)
+
+> What are the similarities between stacks and queues?
+
+Both are the non-primitive data structures.
+
+> Imagine you are an engineer tasked with implementing the UNDO and REDO options in a word processor such as Microsoft Word. Which data structure would you use for each option and why?
+
+UNDO - Stack (LIFO). We want to delete the last action that was done.
+
+REDO - Stack as well. We want to bring back the last action we took out.
+
+
+let reverse = (string) => {
+
+  let newString = "";
+  for (let i = string.length; i >= 0; i--) {
+    newString = newString + string.charAt(i);
+  }
+  return newString;
+}
+
+let customPop = (popArray) => {
+  let returnedArray = "";
+  let arrayLength = popArray.length;
+  let mutatedArray = [];
+
+  for(let i = 0; i < arrayLength; i++) {
+
+    if(i === (arrayLength-1)) {
+      returnedArray = popArray[0];
+      popArray.splice(0,1);
+      return returnedArray;
+    }
+    else {
+      popArray[arrayLength] = popArray[0];
+      popArray.splice(0,1);
+    }
+
+  }
+}
+
+class arrayManipulation {
+   constructor(array) {
+    this.array = array;
+  }
+  getArray() {
+    return this.array;
+  }
+  enqueue(element) {
+    this.array[this.array.length] = element;
+  }
+  dequeue() {
+    let temp = this.array[0];
+    this.array.splice(0,1);
+    return temp;
+  }
+}
