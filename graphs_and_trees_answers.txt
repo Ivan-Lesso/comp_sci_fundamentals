@@ -1,0 +1,95 @@
+> What is a binary tree and what makes it unique to other trees?
+
+Data structure in which each Node may point to a left child and a right child. It follows one rule for left child nodes, and another rule for right child nodes.
+
+> What is a heuristic?
+
+Guesses that an algorithm makes to solve a complex problem sooner by sacrificing accuracy.
+
+> What is another problem besides the shortest-path problem that requires the use of heuristics?
+
+Graph problem.
+
+> What is the difference between a depth-first search and a breadth-first search?
+
+DFS is the process of traveling down a single branch in search of the desired element.
+
+With a Breadth-First Search (BFS), we search an entire row of Nodes before we proceed to the next.
+
+> Explain in your own words what an undirected, a-cyclic, unweighted graph is.
+
+Bunch of nodes that could connect to any other nodes without direction (ambiguous) or other specific rules (getting from one node to another is not done using the most efficient way).
+
+> What kind of graph is a binary search tree?
+
+A Directed, A-Cyclic, Unweighted Graph.
+
+> Programming Challenge:
+
+For the first one, since we know that smaller value goes to the left and higher value goes to the right, we could direct our search appropriately and call the function itself until null is reached. The function returns the number of steps it took to find that node.
+We then recycle that function to get the distance between two nodes. Full code below.
+
+class Node {
+  constructor(value)
+  {
+    this.value = value;
+    this.right = null;
+    this.left = null;
+  }
+}
+class BinarySearchTree
+{
+  constructor()
+  {
+    this.root = null;
+  }
+
+  insert(data)
+  {
+    var newNode = new Node(data);
+
+    if(this.root === null)
+      this.root = newNode;
+    else
+      this.insertNode(this.root, newNode);
+  }
+  insertNode(node, newNode)
+  {
+    if(node.value > newNode.value) {
+      if(node.left===null) node.left = newNode;
+      else this.insertNode(node.left, newNode);
+    }
+    else {
+      if(node.right===null) node.right = newNode;
+      else this.insertNode(node.right, newNode);
+    }
+  }
+  search(value)
+  {
+    return this.exists(this.root, value, 0);
+  }
+  exists(node, value, steps) //Exists will return the number of steps it took to find a node or "Not Found" if node wasn't found
+  {
+    let currentNode = node;
+    if(node===null) {
+      return "Not Found";
+    }
+    //console.log(value + " " + currentNode.value);
+    if(value < currentNode.value) return this.exists(currentNode.left, value, steps+1);
+    else if(value > currentNode.value) return this.exists(currentNode.right, value, steps+1);
+
+    else return steps;
+  }
+}
+let test = new BinarySearchTree();
+test.insert(8);
+test.insert(3);
+test.insert(1);
+test.insert(6);
+test.insert(4);
+test.insert(7);
+test.insert(10);
+test.insert(14);
+test.insert(13);
+console.log(test.search(13));
+console.log(test.search(8) + test.search(10))
