@@ -1,0 +1,143 @@
+> What is a hash table?
+
+Type of data structure that stores each value by linking it to a key, forming key-value pairs.
+
+> What is hashing?
+
+Conversion from a string to a numerical index.
+
+> How does a hash table store data?
+
+Using a key-value pair.
+
+> How are hash tables and objects different?
+
+If there is no need for identifier, use objects. Otherwise, use hash tables.
+
+> Determine whether you would use a hash table or an object to store each of the following pieces of data:
+
+A list of pets and their unique names -> hash table
+The name, age, and the birthday of your best friend. -> object
+The name and location of every company in a given city. -> object
+All of the books checked out from a library by a particular individual. -> hash table
+The primary and secondary phone numbers for a contact. -> hash table
+
+> Build a system that allows a sales associate to enter a customer's name, address, and phone number into the system and look up customers using their phone numbers. Store this information in a hash table.
+
+class HashList {
+  constructor() {
+    this.list = [];
+  }
+
+  add(name, address, phone) {
+    let key = this.computeHash(name);
+
+    let newItem = {};
+    newItem.phone = phone;
+    newItem.key = key;
+    newItem.address = address;
+
+    this.list.push(newItem);
+
+  }
+  lookup(phone) {
+    for(let i=0; i<this.list.length; i++){
+      //console.log(this.list[i]);
+      if(this.list[i].phone===phone)
+      {
+        return this.list[i];
+      }
+    }
+    return "Not Found";
+  }
+  computeHash(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+        let char = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+  }
+}
+
+> Build a system that allows a store owner to track their store's inventory using a hash table for storage.
+
+class Products {
+  constructor() {
+    this.products = [];
+  }
+
+  add(name, quantity) {
+    let key = this.computeHash(name);
+
+    let newItem = {};
+    newItem.name = name;
+    newItem.quantity = quantity;
+
+    this.products.push(newItem);
+
+  }
+  lookup(name) {
+    for(let i=0; i<this.products.length; i++){
+      //console.log(this.list[i]);
+      if(this.products[i].name===name)
+      {
+        return this.products[i];
+      }
+    }
+    return "Not Found";
+  }
+  computeHash(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+        let char = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+  }
+}
+
+> Build a system that allows digital copies of newspapers to be entered and searched by publisher and publication date. Use hash tables to store the necessary data.
+
+class Newspapers {
+  constructor() {
+    this.newspapers = [];
+  }
+
+  add(publisher, publication_date, contents) {
+    let key = this.computeHash(contents);
+
+    let newItem = {};
+    newItem.publisher = publisher;
+    newItem.publication_date = publication_date;
+    newItem.contents = contents;
+
+    this.newspapers.push(newItem);
+
+  }
+  lookup(publisher="", publication_date="") { //OR lookup
+    let foundNewspapers = [];
+    for(let i=0; i<this.newspapers.length; i++) {
+      if(publisher!=="" && this.newspapers[i].publisher===publisher) foundNewspapers.push(this.newspapers[i]);
+      if(publication_date!=="" && this.newspapers[i].publication_date===publication_date) foundNewspapers.push(this.newspapers[i]);
+    }
+    if(foundNewspapers) return foundNewspapers
+    else return "Nothing Found";
+  }
+  computeHash(string) {
+    let hash = 0;
+    for (let i = 0; i < string.length; i++) {
+        let char = string.charCodeAt(i);
+        hash = ((hash<<5)-hash)+char;
+        hash = hash & hash; // Convert to 32bit integer
+    }
+    return hash;
+  }
+}
+
+let test = new Newspapers();
+test.add("Author 1", "2010/10/01", "Test Publication by Author 1");
+test.add("Author 2", "2011/11/02", "Test Publication by Author 12");
+console.log(test.lookup("", "2011/11/02"));

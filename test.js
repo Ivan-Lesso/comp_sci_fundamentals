@@ -40,6 +40,7 @@ class LinkedList {
       return this;
     }
     deduplicate() {
+      debugger;
       let lastNode = this.head;
       while(lastNode.next!==null)
       {
