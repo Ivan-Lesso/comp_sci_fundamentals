@@ -1,0 +1,88 @@
+> What are some pros and cons of using linked lists instead of arrays?
+
+**Pros:** more efficient and less expensive than arrays because elements are not stored continuously as
+they are in an array. This allows us to save some memory space.
+
+**Cons:** because each node may exist anywhere in physical memory, it can be inefficient to access an element within the list.
+
+> Come up with a real world example of a linked list.
+
+People in a queue.
+
+> The linked list push function should take a value, create a node, and add it to the end of a list. Below is pseudocode for a push function for a singly linked list. However, there is something wrong with it. Submit both an explanation of the bug and a functional implementation of the method.
+
+The issue is in this line:
+
+SET current to head
+
+We are always assuming and setting the last node to head, where head is always the first node.
+
+Implementation for all questions:
+
+class LinkedList {
+    constructor(value) {
+        this.head = null;
+        this.currentId = 0;
+        this.length = 0;
+        this.push(value);
+    }
+
+    push(value) {
+      const newNode = {};
+      this.currentId++;
+      newNode.id = this.currentId;
+      newNode.value = value;
+      newNode.next = null;
+
+      let lastNode = this.head;
+
+      if(lastNode === null) this.head = newNode;
+      else
+      {
+        while(lastNode.next!==null)
+        {
+          lastNode = lastNode.next;
+        }
+        lastNode.next = newNode;
+      }
+
+      this.length++;
+      return this;
+    }
+    deduplicate() {
+      let lastNode = this.head;
+      while(lastNode.next!==null)
+      {
+        let newNode = this.head;
+        if(newNode.value === lastNode.value && newNode.id !== lastNode.id) { //check head first
+          this.head = this.head.next;
+        }
+        while(newNode.next!==null)
+        {
+          if(newNode.next.id!==lastNode.id && newNode.next.value===lastNode.value) {
+            newNode.next = newNode.next.next;
+          }
+          else newNode = newNode.next;
+        }
+        lastNode = lastNode.next;
+      }
+      return this;
+    }
+  reverse() {
+    for(let i = 0; i<this.length-1; i++)
+    {
+      let currentNode = this.head;
+
+      for(let a = 0; a <= this.length-(i+2); a++)
+      {
+        if(currentNode.next!==null) {
+          let temp = currentNode.value;
+          currentNode.value = currentNode.next.value;
+          currentNode.next.value = temp;
+          currentNode = currentNode.next;
+        }
+      }
+    }
+    return this;
+  }
+}
